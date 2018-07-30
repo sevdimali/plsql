@@ -37,5 +37,14 @@ close c1;
 end;
 
 --------------------------------------------------------------------
---cursor with records
+--impicit cursors
 --------------------------------------------------------------------
+declare
+si_cnt number;
+si_name varchar2(25);
+begin
+select first_name into si_name from employees where employee_id=1210;
+si_cnt := sql%rowcount;
+
+dbms_output.put_line(si_cnt || ' row found');
+end;
