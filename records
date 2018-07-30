@@ -1,0 +1,33 @@
+create or replace procedure si_ud_rec
+is
+type emp_rec is record (
+first_name varchar2(20),
+salary number
+);
+si_emp_rec emp_rec;
+begin
+    select first_name, salary into si_emp_rec from employees where employee_id =101;
+    dbms_output.put_line(si_emp_rec.first_name || '''s salary is ' || si_emp_rec.salary);
+end;
+
+
+---------------------------------------------
+
+create or replace procedure insert_rec(data_record employee%rowtype)
+as
+begin
+insert into employees values data_record;
+end;
+
+
+declare
+si_rec employees%rowtype;
+begin
+select * into si_rec from employees where employee_id =101;
+
+dbms_output.put_line(si_rec.first_name);
+
+end;
+
+
+
