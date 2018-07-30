@@ -1,0 +1,41 @@
+--------------------------------------------------------------------
+-- cursor more than one row
+--------------------------------------------------------------------
+
+declare
+cursor c1 is select first_name from hr.employees where employee_id >151;
+f_name varchar2(50);
+
+begin
+open c1;
+loop
+fetch c1 into f_name;
+exit when c1%notfound;
+DBMS_OUTPUT.PUT_LINE(f_name);
+end loop;
+close c1;
+end;
+
+--------------------------------------------------------------------
+--cursor with records
+--------------------------------------------------------------------
+
+declare
+cursor c1 is select first_name, salary from hr.employees where employee_id >151;
+
+c_rec c1%rowtype;
+
+begin
+open c1;
+loop
+fetch c1 into c_rec;
+exit when c1%notfound;
+DBMS_OUTPUT.PUT_LINE(c_rec.first_name);
+DBMS_OUTPUT.PUT_LINE(c_rec.salary);
+end loop;
+close c1;
+end;
+
+--------------------------------------------------------------------
+--cursor with records
+--------------------------------------------------------------------
