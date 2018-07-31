@@ -48,3 +48,35 @@ si_cnt := sql%rowcount;
 
 dbms_output.put_line(si_cnt || ' row found');
 end;
+
+
+
+
+--------------------------------------------------------------------
+--reference cursors
+--------------------------------------------------------------------
+declare
+TYPE rcrd_type is RECORD (
+id number,
+name varchar2(500),
+salary number
+);
+
+emp_info_rec rcrd_type;
+
+TYPE si_cur is REF CURSOR;
+
+si_cursor si_cur;
+begin
+open si_cursor for 'select id, name, salary from emp_test';
+loop
+    fetch si_cursor INTO emp_info_rec;
+    exit WHEN si_cursor%notfound;
+    
+    dbms_output.put_line(emp_info_rec.id);
+    dbms_output.put_line(emp_info_rec.name);
+    dbms_output.put_line(emp_info_rec.salary);
+    dbms_output.put_line('----------------');
+    
+end loop;
+end;
