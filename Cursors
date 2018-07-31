@@ -55,6 +55,7 @@ end;
 --------------------------------------------------------------------
 --reference cursors
 --------------------------------------------------------------------
+
 declare
 TYPE rcrd_type is RECORD (
 id number,
@@ -80,3 +81,45 @@ loop
     
 end loop;
 end;
+
+--------------------------------------------------------------------
+--reference cursors function and procedure
+--------------------------------------------------------------------
+
+create or replace function get_names(
+emp_id in number
+)
+return SYS_REFCURSOR is
+n_return SYS_REFCURSOR;
+begin
+open n_return
+for select first_name, last_name from employees where employee_id =emp_id;
+return n_return;
+
+end;
+
+
+
+
+create or replace procedure display_names 
+is
+f_name varchar2(50);
+l_name varchar2(50);
+c_rec SYS_REFCURSOR;
+begin
+
+c_rec := get_names(115);
+loop 
+fetch c_rec into f_name, l_name;
+dbms_output.put_line(f_name);
+dbms_output.put_line(l_name);
+exit when c_rec%notfound;
+end loop;
+close c_rec;
+
+end;
+
+
+exec display_names;
+
+select * from employees where employee_id=115
