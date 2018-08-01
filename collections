@@ -70,3 +70,56 @@ si_id := si_col.next(si_id);
 end loop;
 
 end;
+
+----------------------------------
+varray
+------------------------
+
+* you can not delete data
+* they can be stored in database
+
+declare
+type myvarray is varray(4) varchar2(10);
+si_varray myvarray ;= myvarray();
+si_id number;
+begin
+si_varray.extend(3);
+si_varray(1) :='ALI';
+si_varray(2) :='VALI';
+si_varray(3) :='PIVALI';
+
+si_id := si_varray.first;
+
+while si is not null loop
+
+
+end loop;
+end;
+
+
+
+------------------------------------
+multiset operators
+----------------------------------------------------------
+
+declare
+type si_nested is table of number;
+si_c1 si_nested :=si_nested(1,2,3,4,5,6);
+si_c2 si_nested :=si_nested(5,6,7,8,9);
+begin
+
+--si_c1 := si_c1 multiset union si_c2;
+
+--si_c1 := si_c1 multiset except si_c2;
+
+--si_c1 := si_c1 multiset union distinct si_c2
+
+si_c1 := si_c1 multiset intersect si_c2;
+
+for k in si_c1.first .. si_c1.last
+loop
+    dbms_output.put_line(si_c1(k));
+end loop;
+
+end;
+
