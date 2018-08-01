@@ -1,0 +1,38 @@
+* same datatype
+
+
+index by tables(associative arrays)
+nested tables
+varray
+
+
+---------------------------
+
+index by tables(associative arrays)
+
+Orginallay called as pl/sql tables
+
+we can not store them in Database
+
+
+declare
+type emp_type is table of varchar2(100) index by binary_integer;
+emp_tbl emp_type;
+si_indx number;
+begin
+emp_tbl(1) :='ALI';
+emp_tbl(2) :='VALI';
+emp_tbl(3) :='PIVALI';
+emp_tbl(7) :='MAMED';
+
+si_indx := emp_tbl.first;
+
+while si_indx is not null
+loop
+
+dbms_output.put_line(emp_tbl(si_indx));
+
+si_indx := emp_tbl.next(si_indx);
+    
+end loop;
+end;
