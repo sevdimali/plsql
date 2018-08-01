@@ -36,3 +36,37 @@ si_indx := emp_tbl.next(si_indx);
     
 end loop;
 end;
+
+--------------------------------------------------------------
+
+
+Nested Tables
+-----------------------
+* can be stored in Database
+* they can be indexed only by integer
+* must be initialize
+
+
+
+declare
+type si_coll_nested is table of varchar2(100);
+si_col si_coll_nested :=si_coll_nested();
+si_id number;
+begin
+
+si_col.extend(3);
+
+si_col(1):='ALI';
+si_col(2):='VALI';
+si_col(3):='PIVALI';
+
+si_id := si_col.first;
+
+while si_id is not null loop
+
+dbms_output.put_line(si_col(si_id));
+
+si_id := si_col.next(si_id);
+end loop;
+
+end;
