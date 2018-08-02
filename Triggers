@@ -1,0 +1,34 @@
+Triggers are fired when below events occur:
+1) DML -> (insert, delete, update)
+2) DDL -> (Create, alter, drop)
+3) DB Operation -> (servererror, logon, logoff, startup, shutdown)
+
+
+
+Trigger types
+
+1) Row level
+2) Statement level
+3) Before
+4) After
+
+There are 12 valid combinations.
+
+
+
+
+----------------------------------------------------
+Statement level triggers occurs only one time per statement.
+
+
+create table si_audit (table_name varchar2(100), operation_name varchar2(150), user_id varchar2(100), cdate date);
+
+create or replace trigger si_emp_trg 
+before insert on station
+declare
+si_user varchar2(150);
+begin
+select user into si_user from dual;
+insert into si_audit values  ('station','insert',si_user,sysdate);
+
+end;
